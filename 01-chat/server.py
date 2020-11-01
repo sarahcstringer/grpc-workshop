@@ -1,10 +1,12 @@
 from concurrent import futures
-import grpc
-import chat_pb2_grpc
+
 import chat_pb2
+import chat_pb2_grpc
+import grpc
 
 messages = []
 peer_to_username = {}
+
 
 class ChatService(chat_pb2_grpc.ChatServicer):
     def ListChannels(self, request, context):
@@ -22,7 +24,7 @@ class ChatService(chat_pb2_grpc.ChatServicer):
                 message = messages[seen_messages]
                 seen_messages += 1
                 if message.msg.startswith("@"):
-                    username = message.msg.split()[0].strip('@')
+                    username = message.msg.split()[0].strip("@")
                     if peer_to_username[peer] != username:
                         continue
                 yield message

@@ -1,7 +1,8 @@
-import grpc
-import chat_pb2_grpc
-import chat_pb2
 import threading
+
+import chat_pb2
+import chat_pb2_grpc
+import grpc
 
 
 class ChatClient(object):
@@ -10,7 +11,6 @@ class ChatClient(object):
         self.port = port
         self.channel = grpc.insecure_channel(f"{self.host}:{self.port}")
         self.stub = chat_pb2_grpc.ChatStub(self.channel)
-    
 
     def add_user(self, username):
         user = chat_pb2.User(username=username)
@@ -29,9 +29,8 @@ class ChatClient(object):
             print(f">>> from {msg.user.username}: {msg.msg}")
 
 
-
-
 ### MENU COMMANDS
+
 
 def main():
     client = ChatClient()
