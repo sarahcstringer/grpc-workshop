@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package testsetup;
+
+service TestSetup {
+    rpc Request(EmptyRequest) returns (Response) {}
+}
+
+message EmptyRequest {}
+
+message Response {
+    string message = 1;
+}
