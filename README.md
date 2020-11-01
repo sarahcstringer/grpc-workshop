@@ -23,7 +23,7 @@ Then you can quit the server that's running in the other tab (with control-c).
 
 Defining services/messages
 Code generation
-Creating client/server
+Adding to client/servers
 
 ### Additional Exercises
 

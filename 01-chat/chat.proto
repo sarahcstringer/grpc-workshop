@@ -2,34 +2,18 @@ syntax = "proto3";
 
 package chat;
 
-message MessageResponse {
-    string msg = 1;
-    enum Code {
-        NONE=0;
-        ADDED = 1;
-        TAKEN=2;
-    }
-    Code code = 2;
-}
-
 message Message {
     string msg = 1;
-    User user = 2;
 }
 
-message User {
-    string username = 1;
-}
-
-message ListenRequest {}
-
-message ListenResponse {
+message MessageResponse {
     string msg = 1;
 }
+
+message ListenRequest {};
 
 
 service Chat {
     rpc SendMessage(Message) returns (MessageResponse) {}
     rpc Listen(ListenRequest) returns (stream Message) {}
-    rpc AddUser(User) returns (MessageResponse) {}
 }

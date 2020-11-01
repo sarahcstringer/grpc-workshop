@@ -4,39 +4,24 @@ import chat_pb2
 import chat_pb2_grpc
 import grpc
 
-messages = []
-peer_to_username = {}
-
+MESSAGES = []
 
 class ChatService(chat_pb2_grpc.ChatServicer):
     def ListChannels(self, request, context):
         return chat_pb2.ListChannelsResponse(channels=channels)
 
     def SendMessage(self, request, context):
-        messages.append(request)
+        MESSAGES.append(request)
         return chat_pb2.MessageResponse(msg="Sent message")
 
     def Listen(self, request, context):
         peer = context.peer()
-        seen_messages = len(messages)
+        seen_messages = len(MESSAGES)
         while True:
-            if len(messages) > seen_messages:
-                message = messages[seen_messages]
+            if len(MESSAGES) > seen_messages:
+                message = MESSAGES[seen_messages]
                 seen_messages += 1
-                if message.msg.startswith("@"):
-                    username = message.msg.split()[0].strip("@")
-                    if peer_to_username[peer] != username:
-                        continue
                 yield message
-
-    def AddUser(self, request, context):
-        username = request.username
-        if username in peer_to_username.values():
-            return chat_pb2.MessageResponse(msg="Username taken, choose another.")
-        peer = context.peer()
-        peer_to_username[peer] = username
-        return chat_pb2.MessageResponse(msg="User added.")
-
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
