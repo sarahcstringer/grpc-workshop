@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-This workshop requires you to have python3 installed (>=3.6).
+This workshop requires you to have python3 installed (>=3.7).
 
 ### Setup
 
@@ -13,11 +13,14 @@ This workshop requires you to have python3 installed (>=3.6).
 
 ### Test that the environment is set up correctly
 
-`00-test-setup` contains a small gRPC client and server that you can run to verify you have gRPC correctly installed.
+`00-test-setup` contains a small gRPC client and server that will be used to test your setup. To verify that your setup is working, run the `check-setup.sh` script. It will source your virtual environment (named `venv`), start up the test server, and run the client to make a request to the server. You should see the following output when you run the script:
 
-1. `cd 00-test-setup` and run `python3 server.py` to run the gRPC server.
-2. Open a second tab, and run `python3 client.py` from the `00-test-setup` folder as well. After running the client, you should see the output "Setup successful!".
-Then you can quit the server that's running in the other tab (with control-c).
+```
+$ bash check-setup.sh
+gRPC server is running.
+Received request from gRPC client.
+Setup successful!
+```
 
 ## Workshop
 
