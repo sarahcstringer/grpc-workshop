@@ -13,7 +13,7 @@ This workshop requires you to have python3 installed (>=3.7).
 
 ### Test that the environment is set up correctly
 
-`00-test-setup` contains a small gRPC client and server that will be used to test your setup. To verify that your setup is working, run the `check-setup.sh` script. It will source your virtual environment (named `venv`), start up the test server, and run the client to make a request to the server. You should see the following output when you run the script:
+The [`00-test-setup` folder](https://github.com/sarahcstringer/grpc-workshop/tree/master/00-test-setup) contains a small gRPC client and server that will be used to test your setup. To verify that your setup is working, run the `check-setup.sh` script. It will source your virtual environment (named `venv`), start up the test server, and run the client to make a request to the server. You should see the following output when you run the script:
 
 ```
 $ bash check-setup.sh
@@ -24,6 +24,6 @@ Setup successful!
 
 ## Workshop
 
-### Additional Exercises
+## Additional Exercises (work in progress)
 
-There are several other exercises in the `additional-exercises` folder for more practice with various aspects of gRPC.
+For more practice with gRPC concepts, check out the [`additional-exercises`](https://github.com/sarahcstringer/grpc-workshop/tree/master/additional-exercises) folder.
