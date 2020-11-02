@@ -5,6 +5,7 @@ import chat_pb2_grpc
 import grpc
 
 MESSAGES = []
+PEER_TO_USERNAME = {}
 
 
 class ChatService(chat_pb2_grpc.ChatServicer):
@@ -22,7 +23,30 @@ class ChatService(chat_pb2_grpc.ChatServicer):
             if len(MESSAGES) > seen_messages:
                 message = MESSAGES[seen_messages]
                 seen_messages += 1
+                username = self.strip_username_from_message(message)
+                if username and PEER_TO_USERNAME[peer] != username:
+                    continue
                 yield message
+
+    def AddUser(self, request, context):
+        username = request.username
+        if username in PEER_TO_USERNAME.values():
+            return chat_pb2.MessageResponse(
+                msg="Username taken, please choose another.",
+                code=chat_pb2.MessageResponse.Code.TAKEN,
+            )
+        peer = context.peer()
+        PEER_TO_USERNAME[peer] = username
+        return chat_pb2.MessageResponse(
+            msg=f"User {username} created.", code=chat_pb2.MessageResponse.Code.ADDED
+        )
+
+    @staticmethod
+    def strip_username_from_message(message):
+        username = None
+        if message.msg.startswith("@"):
+            username = message.msg.split()[0].strip("@")
+        return username
 
 
 def serve():
