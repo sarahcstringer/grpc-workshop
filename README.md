@@ -6,8 +6,8 @@ This workshop requires you to have python3 installed (>=3.6).
 
 ### Setup
 
-1. Clone this repository and cd into the `grpc-workshop` directory: `git clone https://github.com/sarahcstringer/grpc-workshop.git && cd grpc-workshop`.
-2. Create a new python3 virtual environment: `python3 -m venv venv`.
+1. Clone this repository and cd into the `grpc-workshop` directory: `git clone https://github.com/sarahcstringer/grpc-workshop.git && cd grpc-workshop`
+2. Create a new python3 virtual environment: `python3 -m venv venv`
 3. Source the new virtual environment: `source venv/bin/activate`
 4. Install the required packages: `pip3 install -r requirements.txt`
 
@@ -20,10 +20,6 @@ This workshop requires you to have python3 installed (>=3.6).
 Then you can quit the server that's running in the other tab (with control-c).
 
 ## Workshop
-
-Defining services/messages
-Code generation
-Adding to client/servers
 
 ### Additional Exercises
 

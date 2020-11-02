@@ -8,7 +8,7 @@
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+        <link rel="stylesheet" href="css/theme/sky.css" id="theme">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
@@ -16,8 +16,66 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+                <section><b>gRPC Workshop</b></section>
+                <section>
+                    <section><b>What is gRPC?</b></section>
+                    <section>
+                        <p><b>gRPC</b></p>
+                        <ul>
+                            <li><b>g</b>(...?) <b>R</b>emote <b>P</b>rocedure <b>C</b>all</li>
+                        </ul>
+                    </section>
+                </section>
+                <section>
+                    <section><b>gRPC vs REST</b></section>
+                    <section>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>gRPC</th>
+                                    <th>REST</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="fragment">
+                                    <th>Payload</th>
+                                    <td>Protocal Buffers</td>
+                                    <td>JSON</td>
+                                </tr>
+                                <tr class="fragment">
+                                    <th>API Contract</th>
+                                    <td>Required and strictly typed</td>
+                                    <td>Optional and loosely typed</td>
+                                </tr>
+                                <tr class="fragment">
+                                    <th>Protocol</th>
+                                    <td>HTTP/2</td>
+                                    <td>HTTP/1.1</td>
+                                </tr>
+                                <tr class="fragment">
+                                    <th>Browser Usage</th>
+                                    <td>Limited support (gRPC-web)</td>
+                                    <td>Supported</td>
+                                </tr>
+                                <tr class="fragment">
+                                    <th>Security</th>
+                                    <td>TLS/SSL</td>
+                                    <td>TLS/SSL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </section>
+                <section>
+                    <section><b>Protocol Buffers</b></section>
+                </section>
+                <section>
+                    <section><b>Creating a gRPC Service</b></section>
+                </section>
+                <section>
+                    <section>Workshop</section>
+                </section>
 			</div>
 		</div>
 
