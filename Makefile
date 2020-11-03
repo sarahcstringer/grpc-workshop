@@ -6,3 +6,6 @@ setup:
 	@bash scripts/install.sh
 	@echo "Checking setup"
 	@bash scripts/check-setup.sh
+
+clean:
+	@bash scripts/clean.sh
