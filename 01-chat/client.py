@@ -26,6 +26,7 @@ class ChatClient(object):
 def main():
     client = ChatClient()
     client.start_listening_thread()
+    print("client initiated. Start chatting by typing anything and pressing enter.")
     while True:
         message = input()
         client.send_message(message)

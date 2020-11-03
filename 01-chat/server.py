@@ -30,6 +30,7 @@ def serve():
     chat_pb2_grpc.add_ChatServicer_to_server(ChatService(), server)
     server.add_insecure_port("[::]:50051")
     server.start()
+    print("server started")
     server.wait_for_termination()
 
 
