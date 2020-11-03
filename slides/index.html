@@ -146,6 +146,145 @@
                     <section>
 						<b>Demo</b>
 					</section>
+                    <section>
+						<b>Example Solution</b>
+					</section>
+					<section>
+						<b>chat.proto</b>
+						<pre><code data-trim data-line-numbers="5-7|11|27">
+						syntax = "proto3";
+
+						package chat;
+
+						message User {
+						  string username = 1;
+						}
+
+						message Message {
+						  string msg = 1;
+						  User user = 2;
+						}
+
+						message MessageResponse {
+						  string msg = 1;
+						}
+
+						message ListenRequest {};
+
+						// Receives and broadcasts chat messages.
+						service Chat {
+						  // Receives a message from a client and adds to list of messages.
+						  rpc SendMessage(Message) returns (MessageResponse) {}
+						  // Streams incoming messages to clients.
+						  rpc Listen(ListenRequest) returns (stream Message) {}
+						  // Adds a new user to the server.
+						  rpc AddUser(User) returns (MessageResponse) {}
+						}
+                        </pre></code>
+					</section>
+					<section>
+						<b>server.py</b>
+						<pre><code data-trim data-line-numbers="8|16-20">
+						from concurrent import futures
+
+						import chat_pb2
+						import chat_pb2_grpc
+						import grpc
+
+						MESSAGES = []
+						USERS = set()
+
+
+						class ChatService(chat_pb2_grpc.ChatServicer):
+						  def SendMessage(self, request, context):
+						    MESSAGES.append(request)
+						    return chat_pb2.MessageResponse(msg="Sent message")
+
+						  def AddUser(self, request, context):
+						    username = request.username
+						    if username in USERS:
+						      return chat_pb2.MessageResponse(msg="Username taken, please choose another.")
+						    return chat_pb2.MessageResponse(msg="Added user")
+								
+						  def Listen(self, request, context):
+						    seen_messages = len(MESSAGES)
+						    while True:
+						      if len(MESSAGES) > seen_messages:
+						        message = MESSAGES[seen_messages]
+						        seen_messages += 1
+								yield message
+
+
+						def serve():
+						  server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+						  chat_pb2_grpc.add_ChatServicer_to_server(ChatService(), server)
+						  server.add_insecure_port("[::]:50051")
+						  server.start()
+						  print("server started")
+						  server.wait_for_termination()
+
+
+						if __name__ == "__main__":
+						  serve()
+                        </pre></code>
+					</section>
+					<section>
+						<b>client.py</b>
+						<pre><code data-trim data-line-numbers="14-19|21-22|27-29|38-43">
+						import threading
+
+						import chat_pb2
+						import chat_pb2_grpc
+						import grpc
+
+
+						class ChatClient(object):
+						  def __init__(self, host="localhost", port="50051"):
+						    self.host = host
+						    self.port = port
+						    self.channel = grpc.insecure_channel(f"{self.host}:{self.port}")
+						    self.stub = chat_pb2_grpc.ChatStub(self.channel)
+
+						  def add_user(self, username):
+						    user = chat_pb2.User(username=username)
+						    response = self.stub.AddUser(user)
+						    self.user = user
+						    return response
+
+						  def send_message(self, msg):
+						    self.stub.SendMessage(chat_pb2.Message(msg=msg, user=self.user))
+
+						  def start_listening_thread(self):
+						    threading.Thread(target=self.listen, daemon=True).start()
+
+						  def listen(self):
+						    for msg in self.stub.Listen(chat_pb2.ListenRequest()):
+						      print(f">>> {msg.user.username}: {msg.msg}")
+
+
+						### MENU COMMANDS
+
+
+						def main():
+						  client = ChatClient()
+
+						  while True:
+						    username = input("choose a username >>> ")
+						    response = client.add_user(username)
+						    print(response.msg)
+						    if response.msg == "Added user":
+						      break
+
+						    client.start_listening_thread()
+						    while True:
+						      message = input()
+					          client.send_message(message)
+
+
+						if __name__ == "__main__":
+					      main()
+                        </pre></code>
+					</section>
                 </section>
 			</div>
 		</div>
