@@ -50,6 +50,7 @@ Once updating `chat.proto`, you'll need to re-compile the protobufs and re-gener
 
 ```
 python3 -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. chat.proto
+
 # Arguments used:
 # -I: the proto path. Where to find the specified proto input file.
 # --python_out: Generate a Python source file with message/service definitions in the given directory.

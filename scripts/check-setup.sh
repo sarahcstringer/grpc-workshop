@@ -3,7 +3,7 @@
 source venv/bin/activate
 python3 00-test-setup/server.py & SERVER_PROC_ID=$!
 SECONDS=0
-while !(lsof -Pi :50051 -sTCP:LISTEN -t >/dev/null)  && [[ SECONDS -lt 10 ]]  ; do
+while ! (lsof -Pi :50051 -sTCP:LISTEN -t >/dev/null)  && [[ "$SECONDS" -lt 10 ]]  ; do
     sleep 1
 done
 
