@@ -19,12 +19,24 @@
                 <section><b>gRPC Workshop</b></section>
                 <section>
                     <section><b>What is gRPC?</b></section>
+					<section>
+						<p>tl;dr: A framework for connecting services</p>
+						<img src="https://grpc.io/img/landing-2.svg">
+					</section>
                     <section>
-                        <p><b>gRPC</b></p>
+                        <p>gRPC Overview</p>
                         <ul>
-                            <li><b>g</b>(...?) <b>R</b>emote <b>P</b>rocedure <b>C</b>all</li>
+                            <li class="fragment fade-in-then-semi-out"><b>g</b>(meaning varies) <b>R</b>emote <b>P</b>rocedure <b>C</b>all</li>
+							<li class="fragment fade-in-then-semi-out">Runs over HTTP/2</li>
+							<li class="fragment fade-in-then-semi-out">Uses Protocol Buffers for data serialization</li>
+							<li class="fragment fade-in-then-semi-out">Supports request/response and streaming</li>
+							<li class="fragment fade-in-then-semi-out">Allows code generation of server and client stubs in 11 languages</li>
                         </ul>
                     </section>
+					<section>
+						<p>gRPC Request/Response Patterns</p>
+						<img src="https://blog.knoldus.com/wp-content/uploads/2020/03/f.png">
+					</section>
                 </section>
                 <section>
                     <section><b>gRPC vs REST</b></section>
@@ -38,27 +50,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="fragment">
+                                <tr class="fragment fade-in-then-semi-out">
                                     <th>Payload</th>
                                     <td>Protocal Buffers</td>
                                     <td>JSON</td>
                                 </tr>
-                                <tr class="fragment">
+                                <tr class="fragment fade-in-then-semi-out">
                                     <th>API Contract</th>
                                     <td>Required and strictly typed</td>
                                     <td>Optional and loosely typed</td>
                                 </tr>
-                                <tr class="fragment">
+                                <tr class="fragment fade-in-then-semi-out">
                                     <th>Protocol</th>
                                     <td>HTTP/2</td>
                                     <td>HTTP/1.1</td>
                                 </tr>
-                                <tr class="fragment">
+                                <tr class="fragment fade-in-then-semi-out">
                                     <th>Browser Usage</th>
                                     <td>Limited support (gRPC-web)</td>
                                     <td>Supported</td>
                                 </tr>
-                                <tr class="fragment">
+                                <tr class="fragment fade-in-then-semi-out">
                                     <th>Security</th>
                                     <td>TLS/SSL</td>
                                     <td>TLS/SSL</td>
@@ -69,12 +81,68 @@
                 </section>
                 <section>
                     <section><b>Protocol Buffers</b></section>
+                    <section><b>Sample .proto File</b>
+						<pre><code data-trim data-line-numbers="1-3|7-10|20-23|25-30">
+						syntax = "proto3";
+
+						package images;
+
+						message Empty {}
+
+						message User {
+						  string username = 1;
+						  string email = 2;
+						}
+
+						message Image {
+						  int32 id = 1;
+						  User user = 2;
+						  int32 width = 3;
+						  int32 height = 4;
+						  bytes image_data = 5;
+						}
+
+						message LikeImageRequest {
+						  User user = 1;
+						  int32 image_id = 2;
+						}
+
+						service ImageLiker {
+						  rpc AddUser(User) returns (Empty) {}
+						  rpc AddImage(Image) returns (Empty) {}
+						  rpc ViewImages(Empty) returns (stream Image) {}
+						  rpc LikeImage(LikeImageRequest) returns (Empty) {}
+						}
+						</code></pre>
+                    </section>
                 </section>
                 <section>
                     <section><b>Creating a gRPC Service</b></section>
-                </section>
+					<section>
+						<img src="https://devopedia.org/images/article/27/4535.1527958246.jpg">
+					</section>
+					<section>
+						<p><b>Creating a gRPC Service</b></p>
+						<ol>
+							<li class="fragment fade-in-then-semi-out">Define the service using Protocol Buffers</li>
+							<li class="fragment fade-in-then-semi-out">Compile protobufs and generate server and client code stubs</li>
+								<ul>
+									<li class="fragment fade-in-then-semi-out">Example for python: <pre><code data-trim>python3 -m grpc_tools.protoc -I=. --python-out=. --grpc_python_out=. service.proto</code></pre></li>
+									<li class="fragment fade-in-then-semi-out">Generates the files:</li>
+										<ul>
+											<li class="fragment fade-in-then-semi-out">service_pb.py (defines request and response classes in Python)</li>
+											<li class="fragment fade-in-then-semi-out">service_pb_grpc.py (defines server and client stubs in Python)</li>
+										</ul>
+								</ul>
+							<li class="fragment fade-in-then-semi-out">Implement server and client logic using the generated stubs</li>
+						</ol>
+					</section>
+				</section>
                 <section>
-                    <section>Workshop</section>
+                    <section>
+						<b>Workshop</b>
+						<p>Chat application over gRPC</p>
+					</section>
                 </section>
 			</div>
 		</div>
