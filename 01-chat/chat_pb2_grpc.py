@@ -6,7 +6,8 @@ import chat_pb2 as chat__pb2
 
 
 class ChatStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Receives and broadcasts chat messages.
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -27,16 +28,19 @@ class ChatStub(object):
 
 
 class ChatServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Receives and broadcasts chat messages.
+    """
 
     def SendMessage(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Receives a message from a client and adds to list of messages.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Listen(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Streams incoming messages to clients.
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -62,7 +66,8 @@ def add_ChatServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class Chat(object):
-    """Missing associated documentation comment in .proto file."""
+    """Receives and broadcasts chat messages.
+    """
 
     @staticmethod
     def SendMessage(request,

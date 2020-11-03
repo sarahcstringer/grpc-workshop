@@ -13,7 +13,10 @@ message MessageResponse {
 message ListenRequest {};
 
 
+// Receives and broadcasts chat messages.
 service Chat {
+    // Receives a message from a client and adds to list of messages.
     rpc SendMessage(Message) returns (MessageResponse) {}
+    // Streams incoming messages to clients.
     rpc Listen(ListenRequest) returns (stream Message) {}
 }
