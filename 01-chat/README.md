@@ -33,6 +33,10 @@ alice: hi, this is alice
 bob: hi, it's bob
 ```
 
+Additionally, it would be helpful for the server to keep track of usernames so only unique usernames
+can be used. If someone signs up with a username that's already used, the server should return a message
+that the username is taken, and the client should prompt for a new username from the user.
+
 ### General Steps
 
 To accomplish this, you'll need to update a few different pieces of code:
@@ -63,9 +67,13 @@ python3 -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. chat.proto
 
 The client and server will now need to be updated with the new service definitions.
 
-The server will have to be updated to accept a request to add a new user.
+The server will have to be updated to accept a request to add a new user, and keep track of unique usernames.
 
-The client will need to ask the user for a username when starting up (you can use Python's `input()` function to prompt the user for input from the command line). It will then need to send a request to the server to add that new user. The client will also need to send along the username with every message that the user sends to the server. Additionally, the client will need to be updated to print a username along with printing each message that is streamed from the server.
+The client will need to ask the user for a username when starting up (you can use Python's `input()` function to prompt the user for input from the command line). It will then need to send a request to the server to add that new user, and keep prompting if the user did not enter a unique username. The client will also need to send along the username with every message that the user sends to the server. Additionally, the client will need to be updated to print a username along with printing each message that is streamed from the server.
+
+### Example solution
+
+There are many ways to approach this feature. One possible solution is in [`solutions/01-add-user`](https://github.com/sarahcstringer/grpc-workshop/tree/master/01-chat/solutions/01-add-user).
 
 
 ## Stretch goal
@@ -88,3 +96,18 @@ def SendMessage(self, request, context):
 
 This `context` object contains information about the `peer`, or the client that sent the request. You can use `context.peer()` to
 get a unique address for that client, and store that information along with the username.
+
+### Example solution
+
+As with the first feature, there are many ways to approach this feature. One possible solution is in [`solutions/02-direct-message`](https://github.com/sarahcstringer/grpc-workshop/tree/master/01-chat/solutions/02-direct-message).
+
+## Futher improvements: Enums and status codes
+
+One further improvement that could be made to the `AddUser` feature would be a specific list of status codes that can be sent back from a server, depending on whether a username is taken or not. This way, the client does not need to check for a specific string, and can rely on a stable, codified Status Code object.
+
+Check out [`Enumerations`](https://developers.google.com/protocol-buffers/docs/proto#enum) in protocol buffers, and add an `enum` for Status Code. This way, when a client sends a request to add a user, the server will send back either a code for ADDED or a code for NOT_ADDED.
+
+### Example solution
+
+Take a look at [`solutions/03-status-code`](https://github.com/sarahcstringer/grpc-workshop/tree/master/01-chat/solutions/03-status-code) for one potential solution.
+

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package chat;
+
+message MessageResponse {
+    string msg = 1;
+}
+
+message Message {
+    string msg = 1;
+    User user = 2;
+}
+
+message User {
+    string username = 1;
+}
+
+message ListenRequest {}
+
+message ListenResponse {
+    string msg = 1;
+}
+
+
+service Chat {
+    rpc SendMessage(Message) returns (MessageResponse) {}
+    rpc Listen(ListenRequest) returns (stream Message) {}
+    rpc AddUser(User) returns (MessageResponse) {}
+}
