@@ -22,6 +22,8 @@ To view slides, open `slides/index.html`.
 
 ## Workshop
 
+Instructions for the main workshop are in [`01-chat`](https://github.com/sarahcstringer/grpc-workshop/tree/master/01-chat).
+
 ## Additional Exercises
 
 For more practice with gRPC concepts, check out the [`additional-exercises`](https://github.com/sarahcstringer/grpc-workshop/tree/master/additional-exercises) folder.
