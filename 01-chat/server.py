@@ -8,9 +8,6 @@ MESSAGES = []
 
 
 class ChatService(chat_pb2_grpc.ChatServicer):
-    def ListChannels(self, request, context):
-        return chat_pb2.ListChannelsResponse(channels=channels)
-
     def SendMessage(self, request, context):
         MESSAGES.append(request)
         return chat_pb2.MessageResponse(msg="Sent message")
