@@ -33,9 +33,7 @@ class ChatService(chat_pb2_grpc.ChatServicer):
             )
         peer = context.peer()
         PEER_TO_USERNAME[peer] = username
-        return chat_pb2.MessageResponse(
-            msg=f"Added user"
-        )
+        return chat_pb2.MessageResponse(msg=f"Added user")
 
     @staticmethod
     def strip_username_from_message(message):
