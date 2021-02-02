@@ -49,10 +49,64 @@
 						<p>An open-source framework for connecting services</p>
 						<img src="images/grpc-4.png">
 					</section>
+                    <section>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>gRPC</th>
+                                    <th>REST</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="fragment fade-in-then-semi-out">
+                                    <th>Payload</th>
+                                    <td>Protocal Buffers (binary)</td>
+                                    <td>JSON (text)</td>
+                                </tr>
+                                <tr class="fragment fade-in-then-semi-out">
+                                    <th>API Contract</th>
+                                    <td>Required and strictly typed</td>
+                                    <td>Optional and loosely typed</td>
+                                </tr>
+                                <tr class="fragment fade-in-then-semi-out">
+                                    <th>Protocol</th>
+                                    <td>HTTP/2</td>
+                                    <td>HTTP/1.1</td>
+                                </tr>
+                                <tr class="fragment fade-in-then-semi-out">
+                                    <th>Browser Usage</th>
+                                    <td>Limited support (gRPC-web)</td>
+                                    <td>Supported</td>
+                                </tr>
+                                <tr class="fragment fade-in-then-semi-out">
+                                    <th>Security</th>
+                                    <td>TLS/SSL</td>
+                                    <td>TLS/SSL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
 					<section>
                         <p><b>gRPC Request/Response and Streaming Patterns</b></p>
 						<img src="https://blog.knoldus.com/wp-content/uploads/2020/03/f.png">
 					</section>
+                </section>
+                <section>
+                    <section>
+						<b>Our gRPC Project</b>
+						<p>Chat application over gRPC</p>
+					</section>
+                    <section>
+						<b>Demo</b>
+					</section>
+                    <section data-background-video="images/before.mp4" data-background-video-muted data-background-size="contain">
+                    </section>
+                    <section>
+                        <b>New Feature: Adding Users</b>
+                    </section>
+                    <section data-background-video="images/after.mp4" data-background-video-muted data-background-size="contain">
+                    </section>
                 </section>
                 <section>
                     <section><b>Creating a gRPC Service</b></section>
@@ -97,25 +151,82 @@
 						</code></pre>
                     </section>
                     <section>
+                        <b>Our chat app proto file</b>
+                        <p>What types of messages and rpcs might be defined?</p>
+                    </section>
+                    <section><b>chat.proto</b>
+						<pre><code data-trim data-line-numbers="1-3|5-13|16-22">
+                    syntax = "proto3";
+
+                    package chat;
+
+                    message Message {
+                        string msg = 1;
+                    }
+
+                    message MessageResponse {
+                        string msg = 1;
+                    }
+
+                    message ListenRequest {};
+
+
+                    // Receives and broadcasts chat messages.
+                    service Chat {
+                        // Receives a message from a client and adds to list of messages.
+                        rpc SendMessage(Message) returns (MessageResponse) {}
+                        // Streams incoming messages to clients.
+                        rpc Listen(ListenRequest) returns (stream Message) {}
+                    }
+                    </code>
+                    </section>
+                    <section data-background-video="images/before.mp4" data-background-video-muted data-background-size="contain">
+                    </section>
+                    <section>
+                        <b>Our chat app proto file</b>
+                        <p>What should we add for the new username feature?</p>
+                    </section>
+                    <section data-background-video="images/after.mp4" data-background-video-muted data-background-size="contain">
+                    </section>
+					<section>
+						<b>Example solution: chat.proto</b>
+						<pre><code data-trim data-line-numbers="5-7|11|27">
+						syntax = "proto3";
+
+						package chat;
+
+						message User {
+						  string username = 1;
+						}
+
+						message Message {
+						  string msg = 1;
+						  User user = 2;
+						}
+
+						message MessageResponse {
+						  string msg = 1;
+						}
+
+						message ListenRequest {};
+
+						// Receives and broadcasts chat messages.
+						service Chat {
+						  // Receives a message from a client and adds to list of messages.
+						  rpc SendMessage(Message) returns (MessageResponse) {}
+						  // Streams incoming messages to clients.
+						  rpc Listen(ListenRequest) returns (stream Message) {}
+						  // Adds a new user to the server.
+						  rpc AddUser(User) returns (MessageResponse) {}
+						}
+                        </pre></code>
+					</section>
+                    <section>
                         <p><b>Creating a gRPC Service</b></p>
 						<img src="https://devopedia.org/images/article/27/4535.1527958246.jpg">
 					</section>
 				</section>
                 <section>
-                    <section>
-						<b>Workshop</b>
-						<p>Chat application over gRPC</p>
-					</section>
-                    <section>
-						<b>Demo</b>
-					</section>
-                    <section data-background-video="images/before.mp4" data-background-video-muted data-background-size="contain">
-                    </section>
-                    <section>
-                        <b>New Feature: Adding Users</b>
-                    </section>
-                    <section data-background-video="images/after.mp4" data-background-video-muted data-background-size="contain">
-                    </section>
                     <section>
 						<b>Example Solution</b>
 					</section>
