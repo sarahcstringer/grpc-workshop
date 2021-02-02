@@ -225,6 +225,13 @@
                         <p><b>Creating a gRPC Service</b></p>
 						<img src="https://devopedia.org/images/article/27/4535.1527958246.jpg">
 					</section>
+                    <section>
+                        <b>Compiling and generating code</b>
+                        <br>
+                        <pre><code data-trim>
+                            python3 -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. chat.proto
+                        </code></pre>
+                    </section>
 				</section>
                 <section>
                     <section>
