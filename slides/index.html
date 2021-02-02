@@ -232,6 +232,9 @@
                             python3 -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. chat.proto
                         </code></pre>
                     </section>
+                    <section>
+                        <b>Next: Implement the logic in the client and server</b>
+                    </section>
 				</section>
                 <section>
                     <section>
@@ -272,7 +275,7 @@
 					</section>
 					<section>
 						<b>server.py</b>
-						<pre><code data-trim data-line-numbers="8|16-20">
+						<pre class="python"><code data-trim data-line-numbers="8|16-20">
 						from concurrent import futures
 
 						import chat_pb2
@@ -318,7 +321,7 @@
 					</section>
 					<section>
 						<b>client.py</b>
-						<pre><code data-trim data-line-numbers="14-22|24-25|32|41-45">
+						<pre class="python"><code data-trim data-line-numbers="14-22|24-25|32|41-45">
                         import threading
 
                         import chat_pb2
